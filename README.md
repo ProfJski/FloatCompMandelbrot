@@ -31,7 +31,18 @@ Basic statistics of the comparison are given in console output, such as the tota
 ### An Example
 Here are some sample images from a zoom in the neighborhood of C = -0.6702 + 0.4580i. Magnification is approximately 10^15. The distance between adjacent pixels is 1/(2^49).  Max iterations is 20K.  For my three types of float I chose `double` (53 bits of precision on my platform), `long double` (64 bits of precision) and `cpp_bin_float_quad` (113 bits of precision).  Here's a picture of the standard double:
 
+
 ![Standard double](images/Iter20KStandardDouble.png)
+
+It doesn't look very different from the image generated with Quad floating point precision:
+
+![Quad float](images/Iter20KQuad.png)
+
+
+But upon subtraction, we find that nearly 60% ofthe pixels are different!  623,764 pixels out of 1,048,576 pixels total (or 59.5%) have different values.  This figure includes points estimated to be in the set in one image, but not in another, as well as points which exceeded the orbit boundary check (i.e., the magnitude of Z > 2) at different iterations.  The standard double and long double implementations did not differ.  Here is a visualization of the differences between Quad precision and `double` (in this case both standard `double` and `long double` because they were the same) 
+
+
+![Difference](images/Iter20KQuadMLongDouble.png)
 
 
 
