@@ -31,7 +31,7 @@ Basic statistics of the comparison are given in console output, such as the tota
 ### An Example
 Here are some sample images from a zoom in the neighborhood of C = -0.6702 + 0.4580i. Magnification is approximately 10^15. The distance between adjacent pixels is 1/(2^49).  Max iterations is 20K.  For my three types of float I chose `double` (53 bits of precision on my platform), `long double` (64 bits of precision) and `cpp_bin_float_quad` (113 bits of precision).  Here's a picture of the standard double:
 
-![Standard double](images/Iter20KStandardDouble.png]
+![Standard double](images/Iter20KStandardDouble.png)
 
 
 
