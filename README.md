@@ -36,8 +36,8 @@ Here are some sample images from a zoom in the neighborhood of C = -0.6702 + 0.4
 
 It doesn't look very different from the image generated with Quad floating point precision:
 
-![Quad float](images/Iter20KQuad.png)
 
+![Quad float](images/Iter20KCPPQuad.png)
 
 But upon subtraction, we find that nearly 60% ofthe pixels are different!  623,764 pixels out of 1,048,576 pixels total (or 59.5%) have different values.  This figure includes points estimated to be in the set in one image, but not in another, as well as points which exceeded the orbit boundary check (i.e., the magnitude of Z > 2) at different iterations.  The standard double and long double implementations did not differ.  Here is a visualization of the differences between Quad precision and `double` (in this case both standard `double` and `long double` because they were the same) 
 
