@@ -70,15 +70,15 @@ This can be useful, for example, for giving you a built-in type image quickly on
 ## Basic program controls
 The mouse left-click is used to recenter the image; keys are used for everything else.  The GUI interface is functional but not as pretty or convenient as professional programs.  This tool is made for research.  Get Ultrafractal or Kalles Fractaler to make beautiful images. ;-)
 
-**Period** - Zooms in by a factor of two
-**Comma** - Zooms out by a factor of two.  These are the only two zoom controls.
-**M, K, O** - Increase max iterations by 1, 10 or 100, respectively.
-**N, J, I** - Decrease max iterations by 1, 10 or 100, respectively.
-**P** - Pause calculation toggle.  This waits for existing threads to complete and then waits for unpause to spawn new ones, so its effect is not instant if you are working on some computationally intensive threads which must finish first.  Keep your batch sizes small for responsiveness.
-**U** - Unpause.  Doesn't toggle.
-**R** - Revert to prior coordinates for image center.  Works once.
-**C** - Toggle a small semi-transparent indicator of the center of the screen.  Useful for zooming.
-**/** (Forward slash) with mouse over a pixel - Gives coordinate info for that pixel in console
+- **Period** - Zooms in by a factor of two
+- **Comma** - Zooms out by a factor of two.  These are the only two zoom controls.
+- **M, K, O** - Increase max iterations by 1, 10 or 100, respectively.
+- **N, J, I** - Decrease max iterations by 1, 10 or 100, respectively.
+- **P** - Pause calculation toggle.  This waits for existing threads to complete and then waits for unpause to spawn new ones, so its effect is not instant if you are working on some computationally intensive threads which must finish first.  Keep your batch sizes small for responsiveness.
+- **U** - Unpause.  Doesn't toggle.
+- **R** - Revert to prior coordinates for image center.  Works once.
+- **C** - Toggle a small semi-transparent indicator of the center of the screen.  Useful for zooming.
+- **/** (Forward slash) with mouse over a pixel - Gives coordinate info for that pixel in console
 
 
 ## The Problem and Solution in More Detail: 
