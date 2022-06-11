@@ -48,7 +48,7 @@ But upon subtraction, we find that nearly 60% ofthe pixels are different!  623,7
 ## Lines to Customize in the Code
 The three floating point types are `typedef`ed as `first_float`, `second_float` and `third_float` throughout the code.  Variable names also have these names as suffixes.  Yes, templated code would be more elegant than coding everything in triplicate.  I began with templated functions, but finding the proper arguments to pass to `std::asynch` proved too hard.
 
-###Set your types
+### Set your types
 Alter these three lines in the code to choose your own floating point implementations and _voila!_ You are all set to go.
 ```
 typedef double first_float;
@@ -56,7 +56,7 @@ typedef cpp_bin_float_quad second_float;
 typedef cpp_bin_float_oct third_float;
 ```
 
-###Set your multi-threading preferences
+### Tweak your multi-threading preferences (optional)
 Depending on how many cores you have you may wish to change `unsigned int numThreads;` This setting creates `numThreads` _for each of the three floating point types_.  So `unsigned int numThreads=4;` will start 12 threads initially.  Built-in types (like `float`, `double,' `long double`) go very quickly on most platforms because of intrinsic processor support.  So threads dedicated to those types will finish quickly.  `Boost::multiprecision`'s `cpp_bin_float` types, however, are much slower to finish.
 
 Each thread calculates a batch of pixels before rejoining the main thread.  You can tweak the batching here:
