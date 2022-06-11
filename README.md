@@ -81,8 +81,20 @@ The mouse left-click is used to recenter the image; keys are used for everything
 - **/** (Forward slash) with mouse over a pixel - Gives coordinate info for that pixel in console
 
 
-## The Problem and Solution in More Detail: 
-### The Inaccuracies of Mandelbrot Representation
+# The Problem and Solution in More Detail: 
+## The Inaccuracies of Mandelbrot Representation
+
+### Definitions
+The Mandelbrot set is defined as the set of points on the complex plane for which the iterative function F(Z) = Z^2+C remains bounded when iterated with Z initially equal to zero and C as the point being tested.  If the magnitude of the function is greater than 2, i.e., |F(z)|>2, then the iterations will be unbounded, so a magnitude check at every iteration is the standard test.  Customarily, the bounded points are colored black.  As such, the *Mandelbrot set* (the black part) is only part of what I am calling the *the Mandelbrot Set Image*, which also includes a color-coded valuation of all the points that escaped the boundary check before max iterations was reached.  These points are not members of the Mandelbrot Set.  They are color-coded by how many iterations it took them to execeed the boundary check.
+
+It may take many iterations, however, for the orbit of a point to exceed the boundary check, so if a point has not escaped the boundary by a certain specified maximum number of iterations, it is customarily "presumed" to be part of the Mandelbrot set and colored black as well.  Of course, further iterations may reveal otherwise, and near the edge of the Mandelbrot set, this is often the case.  
+
+This program seeks to investigate the effect of floating point implementations on _both_ the shape of the Mandelbrot set (i.e., the black points) and the shape of the iteration bands of colored points around it, where there is also considerable visual complexity.
+
+I call _The Mandelbrot Set Algorithm_ the computational implementation whereby one attempts to ascertain whether a certain point on the complex point is in the set.  One important feature of this algorithm is the way complex numbers are handled, including their floating-point representation.  There are several other important choices to make as well, especially those which decrease computation time, such as periodicity checking or the perturbation algorithm.  *Because these time-saving features introduce additional layers of potential inaccuracy, I have intentionally chosen not to employ them here.*  The Mandelbrot Set Algorithm employed here is the simplest and therefore most directly manifests the way floating point implementations affect the visual result.  Our Mandelbrot Set Algorithm simply iterates F(z), performs a boundary check, and if the boundary is exceeded, it returns the iteration number, and if not, it continues until max iterations have been performed.  If the boundary has not been exceeded by max iterations, then a value of zero is returned.
+
+### Pixels to Points
+The Mandelbrot algorithm 
 
 
 
