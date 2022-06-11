@@ -28,6 +28,7 @@ The multi-threaded program generates the desired Mandelbrot set image in all thr
 Green pixels indicate a positive value following the subtraction, red pixels a negative value.
 Basic statistics of the comparison are given in console output, such as the total number of pixels that are different, the percentage of the total image that is different, and the greatest difference between the values of the pixels (which tends to be close to the max iterations that one has selected for the Mandelbrot algorithm).
 
+### Initial results may surprise you
 
 
 
