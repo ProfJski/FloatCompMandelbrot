@@ -16,6 +16,9 @@ A 2013 academic paper, ["Images of Julia Sets That You Can Trust" ](https://math
 ### Background
 If you are unfamiliar with the limitations of floating point arithmetic, read the classic essay ["What Every Computer Scientist Should Know About Floating-Point Arithmetic"](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html) by David Goldberg for a good overview.  Basic introductions to the math involved in generating the Mandelbrot set are ubiquitous if you are unfamiliar with the algorithm.
 
+### The Problem and Solution in More Detail
+For a more detailed statement of the problem and the design of this program, [read the more detailed analysis here](./FloatCompMset.md).
+
 ## The Solution in a Nutshell
 I wrote easy-to-modify c++ code that simply uses `typedef` to allow the user to explore the Mandelbrot set and to compare how the Mandelbrot set image looks when generated using the same parameters on the same points, but using three different floating-point implementations to calculate the result.  In addition to standard `float` and `double` types, the `Boost::Multiprecision` [cpp_bin_float](https://www.boost.org/doc/libs/1_79_0/libs/multiprecision/doc/html/boost_multiprecision/tut/floats/cpp_bin_float.html) class was used to implement extended-precision floating-point types of the user's choice.
 
@@ -68,7 +71,7 @@ unsigned int batchSize_third_float=512;
 This can be useful, for example, for giving you a built-in type image quickly on screen 1 (batching 10K pixels at a time), while allowing different workloads for a 64-bit precision `cpp_bin_float` vs. 500-bit precision `cpp_bin_float` which will take much longer because of all the additional digits to multiply.
 
 ## Basic program controls
-The mouse left-click is used to recenter the image; keys are used for everything else.  The GUI interface is functional but not as pretty or convenient as professional programs.  This tool is made for research.  Get Ultrafractal or Kalles Fractaler to make beautiful images. ;-)
+The mouse left-click is used to recenter the image; keys are used for everything else.  The GUI interface is functional but not as pretty or convenient as professional programs.  This tool is made for research.  Get Ultrafractal or Kalles Fraktaler to make beautiful images.
 
 - **Period** - Zooms in by a factor of two
 - **Comma** - Zooms out by a factor of two.  These are the only two zoom controls.
@@ -82,25 +85,4 @@ The mouse left-click is used to recenter the image; keys are used for everything
 
 
 # The Problem and Solution in More Detail: 
-
-## The Inaccuracies of Mandelbrot Representation
-
-### Definitions
-The **Mandelbrot Set** is defined as the set of points on the complex plane for which the iterative function F(Z) = Z^2+C remains bounded when iterated with Z initially equal to zero and C as the point being tested.  If the magnitude of the function is greater than 2, i.e., |F(z)|>2, then further iterations will produce unboundededly larger values of Z, so a magnitude check of whether |Z|>2 at every iteration is the standard test to evaluate whether a point is outside the Mandelbrot Set.  Customarily, the bounded points, which are part of the Mandelbrot Set, are colored black.  As such, the *Mandelbrot Set* (the black part) is only part of what I am calling the **Mandelbrot Set Image**, which also includes a color-coded valuation of all the points that escaped the boundary check, colored by how many iterations of F(Z) it took a point to do so.  These points are not members of the Mandelbrot Set, but they are still interesting.
-
-It may take many iterations, however, for the orbit of a point to exceed the boundary check, and points in the Mandelbrot Set never will (by definition), *so for the sake of the algorithm terminating,* if a point has not escaped the boundary by a certain specified maximum number of iterations, it is customarily "presumed" to be part of the Mandelbrot set and colored black as well.  Of course, further iterations may reveal otherwise, and near the edge of the Mandelbrot set, this is often the case.  An example would be a point which escapes the boundary check only after 100,000 iterations of slowly growing larger.  If our max iterations is 50K, the point will not produce a Z-value such that |Z|>2 during its first 50K iterations, and so the point will end up being "presumed" part of the Mandelbrot Set for max iterations < 100K.  Yet if we iterate longer, it will become apparent that this point's orbit is indeed unbounded and it is not part of the set because after 100K iterations, the value of Z quickly grows to infinity.
-
-This program seeks to investigate the effect of floating point implementations on _both_ the shape of the Mandelbrot set (i.e., the black points) and the shape of the iteration bands of colored points around it, where there is also considerable visual complexity.
-
-I call **The Mandelbrot Set Algorithm** the computational implementation whereby one attempts to ascertain whether a certain point on the complex point is in the set.  One important feature of this algorithm is the way complex numbers are handled, including their floating-point representation.  There are several other important choices to make as well, especially those which decrease computation time, such as the techniques of periodicity checking or the perturbation algorithm.  *Because these time-saving features introduce additional layers of potential inaccuracy, I have intentionally chosen not to employ them here.*  The Mandelbrot Set Algorithm employed here is the simplest and therefore it most directly manifests the way that floating point implementation affects the visual result.  Our Mandelbrot Set Algorithm simply iterates F(z), performs a boundary check, and if the boundary is exceeded, it returns the iteration number, and if not, it continues until max iterations have been performed.  If the boundary has not been exceeded by max iterations, then a value of zero is returned.
-
-### Pixels to Points
-The Mandelbrot algorithm 
-
-
-
-
-
-
-
-
+ The more detailed analysis is presented [here](./FloatCompMset.md), together with a discussion of this program's design.
