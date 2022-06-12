@@ -1,5 +1,5 @@
 # The Problem in More Detail
-This document adds detail to the cursory overview provided in the [readme](./readme.md).
+This document adds detail to the cursory overview provided in the [readme](README.MD).
 
 ### Preliminary Definitions
 For the sake of clarity.
