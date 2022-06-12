@@ -29,20 +29,19 @@ Green pixels indicate a positive value following the subtraction, red pixels a n
 Basic statistics of the comparison are given in console output, such as the total number of pixels that are different, the percentage of the total image that is different, and the greatest difference between the values of the pixels (which tends to be close to the max iterations that one has selected for the Mandelbrot algorithm).  The console output also prints basic information about the three types one has chosen at start-up, such as digits of precision.
 
 ### An Example
-Here are some sample images from a zoom in the neighborhood of C = -0.6702 + 0.4580i. Magnification is approximately 10^15. The distance between adjacent pixels is 1/(2^49).  Max iterations is 20K.  For my three types of float I chose `double` (53 bits of precision on my platform), `long double` (64 bits of precision) and `cpp_bin_float_quad` (113 bits of precision).  Here's a picture of the standard double:
+Here are some sample images from a zoom in the neighborhood of C = -0.104943 + 0.927572i. Magnification is approximately 33E+6. The distance between adjacent pixels is 1/(2^33).  Max iterations is 30K.  Here's the image generated with standard `double`:
 
 
-![Standard double](images/Iter20KStandardDouble.png)
+![Standard double](images/Set3-CppDouble.png)
 
-It doesn't look very different from the image generated with Quad floating point precision:
-
-
-![Quad float](images/Iter20KCPPQuad.png)
-
-But upon subtraction, we find that nearly 60% ofthe pixels are different!  623,764 pixels out of 1,048,576 pixels total (or 59.5%) have different values.  This figure includes points estimated to be in the set in one image, but not in another, as well as points which exceeded the orbit boundary check (i.e., the magnitude of Z > 2) at different iterations.  The standard double and long double implementations did not differ.  Here is a visualization of the differences between Quad precision and `double` (in this case both standard `double` and `long double` because they were the same) 
+Here is the same image generated with cpp_bin_float_quad (113 bits of precision).  Superficially it looks largely the same:
 
 
-![Difference](images/Iter20KQuadMLongDouble.png)
+![Quad float](images/Set3-CppQuad.png)
+
+But upon subtraction, we find that 8.77% ofthe pixels are different!  92,007 pixels out of 1,048,576 pixels total (or 59.5%) have different values.  These differences include points estimated to be in the Mandelbrot Set in one image and the other, as well as points which exceeded the orbit boundary check (i.e., the magnitude of Z > 2) at different iterations.  Here is the difference between the two images:
+
+![Difference](images/Set3-QuadMinusDouble.png)
 
 
 ## Lines to Customize in the Code
