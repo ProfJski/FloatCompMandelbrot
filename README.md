@@ -29,12 +29,12 @@ Green pixels indicate a positive value following the subtraction, red pixels a n
 Basic statistics of the comparison are given in console output, such as the total number of pixels that are different, the percentage of the total image that is different, and the greatest difference between the values of the pixels (which tends to be close to the max iterations that one has selected for the Mandelbrot algorithm).  The console output also prints basic information about the three types one has chosen at start-up, such as digits of precision.
 
 ### An Example
-Here are some sample images from a zoom in the neighborhood of C = -0.104943 + 0.927572i. Magnification is approximately 33E+6. The distance between adjacent pixels is 1/(2^33).  Max iterations is 30K.  Here's the image generated with standard `double`:
+Here are some sample images from a zoom in the neighborhood of C = -0.104943 + 0.927572i. Magnification is approximately 33E+6. The distance between adjacent pixels is 1/(2^33).  Max iterations is 30K.  Here's the image generated with standard `double` (53 bits of precision):
 
 
 ![Standard double](images/Set3-CppDouble.png)
 
-Here is the same image generated with cpp_bin_float_quad (113 bits of precision).  Superficially it looks largely the same:
+Here is the same image generated with `cpp_bin_float_quad` (113 bits of precision).  Superficially it looks largely the same:
 
 
 ![Quad float](images/Set3-CppQuad.png)
