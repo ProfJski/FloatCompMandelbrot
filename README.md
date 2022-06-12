@@ -39,10 +39,11 @@ Here is the same image generated with `cpp_bin_float_quad` (113 bits of precisio
 
 ![Quad float](images/Set3-CppQuad.png)
 
-But upon subtraction, we find that 8.77% ofthe pixels are different!  92,007 pixels out of 1,048,576 pixels total (or 59.5%) have different values.  These differences include points estimated to be in the Mandelbrot Set in one image and the other, as well as points which exceeded the orbit boundary check (i.e., the magnitude of Z > 2) at different iterations.  Here is the difference between the two images:
+But upon subtraction, we find that 8.77% ofthe pixels are different!  92,007 pixels out of 1,048,576 pixels total (or 59.5%) have different values.  These differences include points estimated to be in the Mandelbrot Set in one image and not in the other, as well as points which exceeded the orbit boundary check (i.e., the magnitude of Z > 2) in both images but at different iterations.  Here's what we get when we subtract the Quad image from the Double precision image:
 
 ![Difference](images/Set3-QuadMinusDouble.png)
 
+Green pixels indicate where Quad > Double, and red pixels the opposite (i.e., where Double > Quad).
 
 ## Lines to Customize in the Code
 The three floating point types are `typedef`ed as `first_float`, `second_float` and `third_float` throughout the code.  Variable names also have these names as suffixes.  Yes, templated code would be more elegant than coding everything in triplicate.  I began with templated code, but finding the proper arguments to pass to `std::asynch` for templated overloaded functions proved too hard.
