@@ -32,6 +32,8 @@ Periodicity checks depend on some arbitary epsilon range to decide whether one v
 ### Error compounds in repeated floating point operations
 Give example from Goldstein; another from Stack Exchange
 
+### Different floating point implementations handle rounding and guard digits differently
+
 ### Pixels to Points
 The Mandelbrot Set is a set of points on the complex plane.  Points do not have length or width.  The algorithm displays pixels, which are small rectangular areas, not points.  A one-to-one relationship between pixels and points should be established.  Super-sampling is an arbitrary solution to the fact that rectangular pixel spans a limitless number of points on the complex plane.
 
