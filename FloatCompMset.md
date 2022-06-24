@@ -43,19 +43,33 @@ If you know of numerical analysis literature which discusses the computation of 
 [Jeff Arnold, CERN](https://indico.cern.ch/event/626147/attachments/1456066/2247140/FloatingPoint.Handout.pdf), "An Introduction to Floating-Point Arithmetic and Computation" (CERN openlab, 9 May 2017)
 
 
-## The Inaccuracies of Mandelbrot Representation
+## Sources of Floating Point Variance in the Mandelbrot Algorithm
 
-### Floating point cannot represent all rational values accurately
+### Initial Round-Off Error: Floating point cannot represent all rational values accurately
+Floating point implementations can only represent exactly those rational numbers with a denominator that is a power of two (dyadic rationals), and it can only represent a range of such rationals to certain limits determined by the size of the numerator and denominator.  In assigning complex values to pixels, care should be taken to avoid introducing round-off error from the very start when calculating the value of point C.  Pixel locations are integer values, but scaling by certain decimal factors (e.g., multiplying by 0.1 decimal) or dividing `int x` and `int y` by a screen resolution that is not a power of two will result in a non-terminating repeating floating point representation of C and immediately introduce issues of round-off error in the value of C, which is added in every iteration of F(Z).  
 
-### Floating point equality tests are inaccurate
-Periodicity checks depend on some arbitary epsilon range to decide whether one value of F(z) is the same as a previous one.  Different bits of precision may affect the result.  Moreover, only exact equality means that F(z) will cycle forever within a fixed boundary.  But suppose instead an orbit which increased in magnitude, ultimately becoming unbounded and |F(Z)|>2, but at an incredibly slow rate, such that millions of iterations were necessary to establish that fact.  Such a point might erroneously be reckoned in the Mandelbrot Set because a periodicity check with too large a floating point epsilon would mistake a very slowly growing orbit for cyclical repetition of the same values.
+Our program avoids this problem in part by plotting points on a texture of 1024 x 1024 pixels.  At lower zoom levels, this eliminates all *initial* round-off error.  At higher zoom levels, however, the problem resurfaces when the distance between two points is smaller than can be accurately represented by the precision of the floating point type.
 
-### Error compounds in repeated floating point operations
-Give example from Goldstein; another from Stack Exchange
+### Accumulated Round-Off Error
+Even with initial values of C that are dyadic rational numbers, the problem of round-off error can only be postponed so long for most values of C.  Consider, by analogy, the operation of squaring a decimal number like 0.5.  The trajectory of such an operation increases the number of digits to the right of the decimal point by one each time: 0.5, 0.25, 0.125, 0.0625, 0.03125, etc.  Similarly for the multiply-then-add operation of Z=Z^2+C.  Eventually the number of binary digits which a floating point type can retain is exceeded and round-off error accumulates with every subsequent iteration.  Higher precision (more bits) only postpones this eventuality.  Moving to arbitrary-precision floating point, or rational representation (using two integers, for numerator and denominator, i.e., keep everything as fractions) quickly leads to so many significant digits to multiply in every iteration that calculations become enormously slow (or iterations must be kept very low, which means the true value of higher-iteration points cannot be discerned).  For many points, the number of significant digits in a trajectory of values doubles with each iteration.
 
-### Different floating point implementations handle rounding and guard digits differently
+### Different Rounding Modes
+Different computer languages and compilers may handle rounding modes differently.  "Round to nearest even" is a common standard today, but not universally guaranteed.  "Round to nearest" is what it sounds like: the familiar operation of rounding to the nearest number within your limit of precision.  E.g. within 3 decimal digits 0.1282 rounds to 0.128 but 0.3789 rounds to 0.379.  But what happens when a 5 is the terminal digit?  Does 0.0625 round up to 0.063 or down to 0.062, since both are equidistant from 0.0625?  In such cases, "Round to nearest even" rounds to a final digit which is even (here 0.062), which is a simply way of rounding down "about half the time" and rounding up "about half the time," versus always rounding up in such cases, which might lead, over many repeated operations, to a progressive accumulation of error in one direction.  Similarly with always rounding down or truncating.  The latter approach apparently once led to the substantial devaluation of the [Vancouver Stock Market](https://web.ma.utexas.edu/users/arbogast/misc/disasters.html).
 
-### Pixels to Points
-The Mandelbrot Set is a set of points on the complex plane.  Points do not have length or width.  The algorithm displays pixels, which are small rectangular areas, not points.  A one-to-one relationship between pixels and points should be established.  Super-sampling is an arbitrary solution to the fact that rectangular pixel spans a limitless number of points on the complex plane.
+If you care to muck around with compiler directives and `#PRAGMA` statements, you can change the rounding mode of the program to see its effect, but "round to nearest even" is the best bet to minimize (but not eliminate) accumulated rounding mode error.
+
+### "Catastrophic Cancellation"
+Subtracting two values that are close to each other leads to a large loss in bits of precision called "catastrophic cancellation" in numerical analysis.  A subtraction is always involved in every iteration of F(Z), since the real component of Z^2 = (a^2-b^2) if we represent Z as (a+bi).  Moreover, depending on the signs of Z's components and C's components, another subtraction may be involved in both the real and imaginary parts in every iteration when C is added to the result (Z^2+C) since addition of a negative has the same potentially catastrophic effect.  For a point that iterates thousands of times, how likely is catastrophic cancellation to happen?
+
+### Floating-point math is not always associative
+Depending on the magnitude of the quantities involved, `(a+b)+c` may not equal `a+(b+c)` or `a*(b+c)` may not equal `(a*b)+(a*c)`.  Moreover, the expression `(x^2 - y^2)` typically results in more loss of precision than if calculated as `(x+y)*(x-y)`.  How many Mandelbrot programs code their central loop in the latter fashion?  (Perhaps the more performance-oriented, since we trade 2 multiplication and a subtraction for 1 multiplication and two additions?)  Since our code is not templated, it would be easy to modify one of the msetPoint functions to use `(x^2-y^2)` and another to use `(x+y)*(x-y)`, set them to the same floating-point type and see what difference this programming decision alone makes.
+
+### (Perhaps obvious but) No Supersampling
+The Mandelbrot Set Image represents a set of points on the complex plane by pixels.  Points do not have length or width.  Pixels do; they are small rectangles.  Super-sampling is an arbitary solution to the fact that the rectangular area of a pixel spans an infinite number of points on the complex plane if pixels are understood to represent *areas* rather than *points*.  Often super-sampling is employed simply to provide a smoother image in fast-varying ("chaotic") areas where "noise" in the image is not desired as a matter of asthetic preference. Super-sampling averages the values of many points within the area of the pixel (typically 4, sometimes 9).  We do not employ super-sampling because it obscures the data we are trying to discern: the effect of floating point implementation on the calculation of a single trajectory -- not an averaged value of multiple trajectories.  Instead, we put pixels in a one-to-one relation to the points they represent.  You can think of this as mapping some imaginary point on the pixel, such as its center or corner, onto the complex plane, and making the whole pixel represent that value.
+
+
+
+
+
 
 
