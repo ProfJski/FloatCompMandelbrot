@@ -59,9 +59,9 @@ Press `Key <8>` to see the trajectory screen by itself.  In this display mode, t
 ![Trajectory View](images/TrajectoryView.png)
 
 ## Lines to Customize in the Code
-The three floating point types are `typedef`ed as `first_float`, `second_float` and `third_float` throughout the code.  Variable names also have these names as suffixes.  Yes, templated code would be more elegant than coding everything in triplicate.  I began with templated code, but finding the proper arguments to pass to `std::asynch` for templated overloaded functions proved too hard.
+The three floating point types are `typedef`ed as `first_float`, `second_float` and `third_float` throughout the code.  Variable names also have these names as suffixes.  Yes, templated code would be more elegant than coding everything in triplicate!  I began with templated code, but finding the proper arguments to pass to `std::asynch` for templated overloaded functions proved too hard.
 
-Places to customize your settings are preceded by the comment tag `// OPTION` which string you can search.  Here are the basic options.  The main setting is the first: selecting your floating point types.  
+Places to customize your settings are preceded by the comment tag `// OPTION`, for which string you can search.  The basic options are below.  The first setting is the most important: selecting your floating point types.
 
 ### Set your types
 Alter these three lines in the code to choose your own floating point implementations and _voila!_ You are all set to go.  It will be helpful to order your types from the least precise for `first_float` to the most precise for `third_float`.
@@ -102,5 +102,5 @@ The **mouse left-click** is used to recenter the image; keys are used for everyt
 - **8** with mouse over a pixel - Plots trajectory of that point (screen mode 8) in all three types.
 
 
-# The Problem and Solution in More Detail: 
- The more detailed analysis is presented [here](./FloatCompMset.md), together with a discussion of this program's design.
+# The Problem and Solution in More Detail
+For a more detailed statement of the problem and the design of this program, [read the more detailed analysis here](./FloatCompMset.md).
