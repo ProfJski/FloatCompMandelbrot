@@ -23,18 +23,24 @@ This program seeks to investigate how different floating point implementations m
 
 I have yet to see a detailed treatment of this question from the perspective of [numerical analysis](https://en.wikipedia.org/wiki/Numerical_analysis), but several parts of the Mandelbrot Set algorithm are identified in numerical analysis literature as potentially problematic.  I am not a professional mathematician or numerical analyst.  So therefore I must take an empirical approach to the problem to see how extensive an effect floating point implementations may have on Mandelbrot Set Images.  The program presented here is my humble tool for this investigation.  It can benefit from the wisdom of more learned programmers.
 
-If you know of numerical analysis literature which discusses the computation of Mandelbrot Set Images, please let me know!  It surprises me that information is not readily available online, given the fame of the Mandelbrot set, the ubiquity of programs calculating it, and the fact that from its first image, it has been generated on an wide variety of computers.
+If you know of numerical analysis literature which discusses the computation of Mandelbrot Set Images, please let me know!  It surprises me that information is not readily available online, given the fame of the Mandelbrot set, the ubiquity of programs calculating it, and the fact that from its first image, it has been generated on a wide variety of computers.
 
 ### Select Online Bibliography
-[David Goldberg](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html#10061), *What Every Computer Scientist Should Know About Floating-Point Arithmetic*.  
+[David Goldberg](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html#10061), *What Every Computer Scientist Should Know About Floating-Point Arithmetic*.
+  
 [L. H. de Figueiredo, D. Nehab, J. Stolfi, and J. B. Oliveira](https://mathr.co.uk/blog/2018-08-20_trustworthy_fractals.html) *Images of the Julia Set That You Can Trust* [Print format](http://webdoc.sub.gwdg.de/ebook/serien/e/IMPA_A/721.pdf)
-[Weather Vane on StackExchange](https://math.stackexchange.com/questions/2731582/are-the-intriguing-and-lovely-mandelbrot-set-hoops-and-curls-the-result-of-float) *Are the intriguing and lovely Mandelbrot Set hoops and curls the result of floating point computation inaccuracy?*
-[William Kahan's Homepage](https://people.eecs.berkeley.edu/~wkahan/) A world authority on the challenges of floating-point math.  An architect of the IEEE 754 standard.
-[The Floating Point Guide](https://floating-point-gui.de/formats/fp/)
-[Wikipedia s.v. "Floating Point Arithmetic"](https://en.wikipedia.org/wiki/Floating-point_arithmetic)
-[Robert Sedgewick and Kevin Wayne](https://introcs.cs.princeton.edu/java/91float/) 9.1 Floating Point: Textbook excerpt with good discussion of many problems: roundoff error accumulation, catastrophic cancellation, and well-conditioned vs. ill-conditioned problems, all of which apply to Mandelbrot Set algorithms.
-[Jeff Arnold, CERN](https://indico.cern.ch/event/626147/attachments/1456066/2247140/FloatingPoint.Handout.pdf), "An Introduction to Floating-Point Arithmetic and Computation" (CERN openlab, 9 May 2017)
 
+[Weather Vane on StackExchange](https://math.stackexchange.com/questions/2731582/are-the-intriguing-and-lovely-mandelbrot-set-hoops-and-curls-the-result-of-float) *Are the intriguing and lovely Mandelbrot Set hoops and curls the result of floating point computation inaccuracy?*
+
+[William Kahan's Homepage](https://people.eecs.berkeley.edu/~wkahan/) A world authority on the challenges of floating-point math.  An architect of the IEEE 754 standard.
+
+[The Floating Point Guide](https://floating-point-gui.de/formats/fp/)
+
+[Wikipedia s.v. "Floating Point Arithmetic"](https://en.wikipedia.org/wiki/Floating-point_arithmetic)
+
+[Robert Sedgewick and Kevin Wayne](https://introcs.cs.princeton.edu/java/91float/) 9.1 Floating Point: Textbook excerpt with good discussion of many problems: roundoff error accumulation, catastrophic cancellation, and well-conditioned vs. ill-conditioned problems, all of which apply to Mandelbrot Set algorithms.
+
+[Jeff Arnold, CERN](https://indico.cern.ch/event/626147/attachments/1456066/2247140/FloatingPoint.Handout.pdf), "An Introduction to Floating-Point Arithmetic and Computation" (CERN openlab, 9 May 2017)
 
 
 ## The Inaccuracies of Mandelbrot Representation
