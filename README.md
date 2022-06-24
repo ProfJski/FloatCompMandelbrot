@@ -1,5 +1,5 @@
 # FloatCompMandelbrot
-What impact does floating point precision have on Mandelbrot set calculations?
+A program to explore how Mandelbrot set images are affected by floating point precision.
 
 ## The Problem In A Nutshell
 How much is a Mandelbrot set image affected by the floating point precision of the code used to compute it?
@@ -42,22 +42,24 @@ Here is the same image generated with `cpp_bin_float_quad` (113 bits of precisio
 
 ![Quad float](images/Set3-CppQuad.png)
 
-But upon subtraction, we find that 8.77% ofthe pixels are different!  92,007 pixels out of 1,048,576 pixels total (or 59.5%) have different values.  These differences include points estimated to be in the Mandelbrot Set in one image and not in the other, as well as points which exceeded the orbit boundary check (i.e., the magnitude of Z > 2) in both images but at different iterations.  Here's what we get when we subtract the Quad image from the Double precision image:
+But upon subtraction, we find that 8.77% ofthe pixels are different!  92,007 out of 1,048,576 pixels have different values.  These differences include points estimated to be in the Mandelbrot Set in one image and not in the other, as well as points which exceeded the orbit boundary check (i.e., the magnitude of Z > 2) in both images but at different iterations.  Here's what we get when we subtract the Quad image from the Double precision image and color-code the difference:
 
 ![Difference](images/Set3-QuadMinusDouble.png)
 
-Green pixels where Quad > Double; red pixels where Double > Quad.
+Green pixels are where Quad > Double; red pixels are where Double > Quad.
 
 ## Four Screen View
-Press `Key <7>` with the mouse over a pixel in screen views 1, 2 or 3 to trigger Four-Screen view.  Top left and right are float types 1 and 2.  Bottom left is the difference between them.  The bottom right screen displays the trajectory of the point against the background of the whole Mandelbrot set.  The first float type is plotted in blue, the second in red, the third in yellow.  This allows you to see how different floating point implementations lead to different trajectories, which lead to different final values for a point in the image.
+Press `Key <7>` with the mouse over a pixel in screen views 1, 2 or 3 to trigger Four-Screen view.  Top left and right are float types 1 and 2.  Bottom left is the difference between them.  The bottom right screen displays the trajectory of the point against the background of the whole Mandelbrot set.  The first float type is plotted in blue, the second in red, the third in yellow.  This allows you to see how different floating point implementations lead to different trajectories, which lead to different final values for a single point in the image.  Press `Key <8>` to see this screen by itself.
 
 ![Four Screen View](images/DiffOrbitsFloatDoubleQuad.png)
 
 ## Lines to Customize in the Code
 The three floating point types are `typedef`ed as `first_float`, `second_float` and `third_float` throughout the code.  Variable names also have these names as suffixes.  Yes, templated code would be more elegant than coding everything in triplicate.  I began with templated code, but finding the proper arguments to pass to `std::asynch` for templated overloaded functions proved too hard.
 
+Places to customize your settings are preceded by the comment tag `// OPTION` which string you can search.  Here are the basic options.  The main setting is the first: selecting your floating point types.  
+
 ### Set your types
-Alter these three lines in the code to choose your own floating point implementations and _voila!_ You are all set to go.
+Alter these three lines in the code to choose your own floating point implementations and _voila!_ You are all set to go.  It will be helpful to order your types from the least precise for `first_float` to the most precise for `third_float`.
 ```
 typedef double first_float;
 typedef cpp_bin_float_quad second_float;
@@ -65,28 +67,34 @@ typedef cpp_bin_float_oct third_float;
 ```
 
 ### Tweak your multi-threading preferences (optional)
-Depending on how many cores you have you may wish to change `unsigned int numThreads;` This setting creates `numThreads` _for each of the three floating point types_.  So `unsigned int numThreads=4;` will start 12 threads initially.  Built-in types (like `float`, `double,` `long double`) go very quickly on most platforms because of intrinsic processor support.  So threads dedicated to those types will finish far more quickly than those using  `Boost::multiprecision`'s `cpp_bin_float` types.  Software-emulated floating-point support is always slower.  That's why they invented FPUs.
+Depending on how many cores you have you may wish to change `unsigned int numThreads;` This setting creates `numThreads` _for each of the three floating point types_.  So `unsigned int numThreads=4;` will start 12 threads initially.  Built-in types (like `float`, `double,` `long double`) go much faster on most platforms because of intrinsic processor support.  So threads dedicated to those types will finish far sooner than those using  `Boost::multiprecision`'s `cpp_bin_float` types.  Software-emulated floating-point support is always slower.  That's why they invented FPUs.
 
-Each thread calculates a batch of pixels before rejoining the main thread.  You can tweak the amount per batch here:
+Each thread calculates a batch of pixels at a time.  You can tweak the amount per batch here:
 ```
 unsigned int batchSize_first_float=10240;
 unsigned int batchSize_second_float=2048;
 unsigned int batchSize_third_float=512;
 ```
-This can be useful, for example, for giving you a built-in type image quickly on screen 1 (batching 10K pixels at a time), while allowing different workloads for a 64-bit precision `cpp_bin_float` vs. 500-bit precision `cpp_bin_float` which will take much longer because of all the additional digits to multiply.
+Choosing a built-in type like `double` for the `first_float` type, and asigning it a large number of pixels per batch (like 10K above), can be useful to display an image quickly on screen 1 to help perfect your center and zoom.
+
+### Tweak how your starting point is calculated (optional)
+Every pixel on the screen has X and Y coordinates (ranging 0-1023) which correspond to some point on the complex plane and constitute the value of C in the formula Z=Z^2+C.  Presuming that your floating point types range from least precise (for `first_float`) to most precise, as you zoom deeper, the calculation of C will begin to be affected by the precision of your floating point types, beginning with `first_float` losing precision in its last decimal places.  You can choose whether to start iterating with a value for C that is calculated separately for each type, in its own precision, which may lead to slightly different values for C.  Or you can start iterating with the exact same value for C for all types by simply casting the value for C in `first_float` into the higher-precision types.  The latter approach can highlight differences in value due solely to floating-point inaccuracy accumulated through iteration.
 
 ## Basic program controls
-The mouse left-click is used to recenter the image; keys are used for everything else.  The GUI interface is functional but not as pretty or convenient as professional programs.  This tool is made for research.  Get Ultrafractal or Kalles Fraktaler to make beautiful images.
+The **mouse left-click** is used to recenter the image; keys are used for everything else.  Recentering and zooming takes a few seconds for the screen to reset.  The GUI interface is functional but not as pretty or convenient as professional programs.  This tool is made for research.  Get Ultrafractal or Kalles Fraktaler to make beautiful images easily.  My color palette is ugly as sin.
 
 - **Period** - Zooms in by a factor of two
-- **Comma** - Zooms out by a factor of two.  These are the only two zoom controls.
-- **M, K, O** - Increase max iterations by 1, 10 or 100, respectively.
-- **N, J, I** - Decrease max iterations by 1, 10 or 100, respectively.
+- **Comma** - Zooms out by a factor of two.
+- **Semi-colon** - Zooms in by a factor of eight.  These are the only zoom controls.
+- **M, K, O** - Increase max iterations by 1, 10 or 100, respectively.  **Shift+O** increases to the nearest whole 1000.
+- **N, J, I** - Decrease max iterations by 1, 10 or 100, respectively.  **Shift+I** decreases by 1000.
 - **P** - Pause calculation toggle.  This waits for existing threads to complete and then waits for unpause to spawn new ones, so its effect is not instant if you are working on some computationally intensive threads which must finish first.  Keep your batch sizes small for responsiveness.
 - **U** - Unpause.  Doesn't toggle.
 - **R** - Revert to prior coordinates for image center.  Works once.
 - **C** - Toggle a small semi-transparent indicator of the center of the screen.  Useful for zooming.
+- **G** - Toggle a semi-transparent grid overlay with circles various radii and a rectangle around the middle of the screen.  Useful for centering the screen before zooming and estimating orbits.
 - **/** (Forward slash) with mouse over a pixel - Gives coordinate info for that pixel in console
+- **8** with mouse over a pixel - Plots trajectory of that point (screen mode 8) in all three types.
 
 
 # The Problem and Solution in More Detail: 
