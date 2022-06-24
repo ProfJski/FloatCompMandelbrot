@@ -56,6 +56,8 @@ Press `Key <7>` with the mouse over a pixel in screen views 1, 2 or 3 to trigger
 ### Trajectory view
 Press `Key <8>` to see the trajectory screen by itself.  In this display mode, the background remains that of the zoomed-in image, rather than the whole Mandelbrot set, but the screen coordinates of the trajectories are still (-2-2i) to (2+2i).  Leaving the background image of the zoomed-in fractal better allows you to select a point where trajectories clearly diverge, which are often near the edges of the set or other high-chaos areas.
 
+![Trajectory View](images/TrajectoryView.png)
+
 ## Lines to Customize in the Code
 The three floating point types are `typedef`ed as `first_float`, `second_float` and `third_float` throughout the code.  Variable names also have these names as suffixes.  Yes, templated code would be more elegant than coding everything in triplicate.  I began with templated code, but finding the proper arguments to pass to `std::asynch` for templated overloaded functions proved too hard.
 
