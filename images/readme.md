@@ -1,1 +1,1 @@
-Just a place for images used in the main readme.md
+Just a place for images used in the program documentation.
