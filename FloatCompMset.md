@@ -65,7 +65,7 @@ Because of floating point inaccuracy, direct tests of equality may fail. See [^7
 While this issue does not affect our core algorithm, it is a reason why period checking (a/k/a cycle detection) is not employed in our program.
 
 # Program Design
-In light of the foregoing, here are some design choices I made in my code, and some thoughts about the "Trustworthiness" [^2] of Mandelbrot Set Images.
+In light of the foregoing, here are some design choices I made in my code, and some thoughts about the "Trustworthiness" [^4] of Mandelbrot Set Images.
 
 ## Initial Values: C is dyadic
 To avoid introducing round-off error from the very start, pixels correspond to dyadic rational values.  Pixels are plotted on a texture of 1024 x 1024 pixels.  At lower zoom levels, this eliminates all *initial* round-off error. At higher zoom levels, however, the problem resurfaces when the distance between two points is smaller than can be accurately represented by the precision of the floating point type.
@@ -104,4 +104,5 @@ The Mandelbrot Set Image represents a set of points on the complex plane by pixe
 [^10]:  [Jeff Arnold, CERN](https://indico.cern.ch/event/626147/attachments/1456066/2247140/FloatingPoint.Handout.pdf), "An Introduction to Floating-Point Arithmetic and Computation" (CERN openlab, 9 May 2017)
 
 [^11]:  [Volker Schatz](https://www.volkerschatz.com/science/float.html), "What you never wanted to know about floating point but will be forced to find out"
+
 
