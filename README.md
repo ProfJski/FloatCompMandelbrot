@@ -1,7 +1,7 @@
 # FloatCompMandelbrot
 A program to explore how Mandelbrot set images are affected by floating point precision.
 
-Dependencies: [Boost::Multiprecision](https://www.boost.org/doc/libs/1_79_0/libs/multiprecision/doc/html/index.html) (How to Install Boost: [Getting Started](https://www.boost.org/doc/libs/1_79_0/more/getting_started/index.html) ) and [RayLib](https://github.com/raysan5/raylib) for graphics.  Boost::Multiprecision may be easily replaced by other floating-point or rational implementations, like GiMP or GMPF by just changing the `#include`s and `typedef`s at the beginning.
+Dependencies: [Boost::Multiprecision](https://www.boost.org/doc/libs/1_79_0/libs/multiprecision/doc/html/index.html) (How to [Install Boost](https://www.boost.org/doc/libs/1_79_0/more/getting_started/index.html) ) and [RayLib](https://github.com/raysan5/raylib) for graphics.  Boost::Multiprecision may be easily replaced by other floating-point or rational implementations, like GiMP or GMPF by just changing the `#include`s and `typedef`s at the beginning.
 
 ## The Problem In A Nutshell
 How much is a Mandelbrot set image affected by the floating point precision of the code used to compute it?
